@@ -8,7 +8,8 @@ import axios from "axios";
 import { registerRoute } from "../utils/APIRoutes";
 
 function Register() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -26,7 +27,6 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
-      //console.log('in validation')
       const { password, username, email } = values;
       const { data } = await axios.post(registerRoute, {
         username,
@@ -37,7 +37,7 @@ function Register() {
         toast.error(data.msg, toastOptions);
       }
       if(data.status === true) {
-        localStorage.setItem('gm-chat-user', JSON.stringify(data.user));
+        localStorage.setItem('chat-user', JSON.stringify(data.user));
         navigate("/");
       }
     }
@@ -51,7 +51,7 @@ function Register() {
         toastOptions
       );
       return false;
-    } else 
+    } else
     if (username.length < 3) {
       toast.error(
         "Votre pseudo est trop court, il doit contenir au moins 4 caractères.",
@@ -60,7 +60,7 @@ function Register() {
       return false;
     }
     else if (email === "") {
-      toast.error("Veuillez entrer une addresse email.", toastOptions);
+      toast.error("Veuillez entrer une adresse email.", toastOptions);
     }
     return true;
   };
@@ -132,6 +132,7 @@ function Register() {
                     </label>
                     <input
                       type="password"
+                      onChange={(e) => handleChange(e)}
                       name="password"
                       id="password"
                       placeholder="••••••••"
