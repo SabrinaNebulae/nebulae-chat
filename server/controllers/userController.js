@@ -33,11 +33,11 @@ module.exports.login = async (req, res, next) => {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
         if (!user)
-            return res.json({ msg: "Pseudo incorrect !", status: false });
+            return res.json({ msg: "Pseudo ou mot de passe incorrect.", status: false });
 
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword)
-            return res.json({ msg: "Mot de passe incorrect !", status: false });
+            return res.json({ msg: "Pseudo ou mot de passe incorrect.", status: false });
 
         delete user.password;
 
